@@ -1,12 +1,12 @@
 Model {
-  Name			  "SimplePendulumBlock"
+  Name			  "HangingPendulum2"
   Version		  8.0
   MdlSubVersion		  0
   GraphicalInterface {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.2"
+    ComputedModelVersion    "1.4"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -30,7 +30,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [976.0, 267.0, 800.0, 522.0]
+      Location		      [40.0, 120.0, 800.0, 522.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -39,7 +39,7 @@ Model {
 	DockPosition		"Left"
 	Width			[50]
 	Height			[50]
-	Filter			[15]
+	Filter			[8]
       }
       Object {
 	$PropName		"ExplorerBarInfo"
@@ -56,19 +56,19 @@ Model {
 	LoadSaveID		"0"
 	Extents			[576.0, 348.0]
 	ZoomFactor		[1.0]
-	Offset			[2.0, 1.0]
+	Offset			[0.0, 0.0]
       }
     }
   }
-  Created		  "Sun Dec 23 23:24:26 2012"
+  Created		  "Mon Dec 24 00:42:45 2012"
   Creator		  "cat"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "cat"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Dec 24 00:14:22 2012"
-  RTWModifiedTimeStamp	  278207971
-  ModelVersionFormat	  "1.%<AutoIncrement:2>"
+  LastModifiedDate	  "Mon Dec 24 00:51:50 2012"
+  RTWModifiedTimeStamp	  0
+  ModelVersionFormat	  "1.%<AutoIncrement:4>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -105,12 +105,12 @@ Model {
     $PropName		    "DataLoggingOverride"
     $ObjectID		    6
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
-    model_		    "SimplePendulum"
-    overrideMode_	    [0.0]
+    model_		    "HangingPendulum2"
+    overrideMode_	    [0U]
     Array {
       Type		      "Cell"
       Dimension		      1
-      Cell		      "SimplePendulum"
+      Cell		      "HangingPendulum2"
       PropName		      "logAsSpecifiedByModels_"
     }
     Array {
@@ -212,7 +212,7 @@ Model {
 	  LimitDataPoints	  on
 	  MaxDataPoints		  "1000"
 	  LoadExternalInput	  off
-	  LoadInitialState	  off
+	  LoadInitialState	  on
 	  SaveFinalState	  off
 	  SaveCompleteFinalSimState off
 	  SaveFormat		  "Array"
@@ -764,8 +764,8 @@ Model {
     }
   }
   System {
-    Name		    "SimplePendulumBlock"
-    Location		    [976, 267, 1776, 789]
+    Name		    "HangingPendulum2"
+    Location		    [40, 120, 840, 642]
     Open		    on
     ModelBrowserVisibility  on
     ModelBrowserWidth	    200
@@ -781,66 +781,70 @@ Model {
     ReportName		    "simulink-default.rpt"
     SIDHighWatermark	    "4"
     Block {
-      BlockType		      M-S-Function
-      Name		      "Level-2 MATLAB S-Function"
-      SID		      "1"
-      Ports		      [1, 1]
-      Position		      [225, 146, 355, 204]
-      ZOrder		      1
-      FunctionName	      "SimplePendulum"
-      Parameters	      "Ip mp lc"
-    }
-    Block {
       BlockType		      Step
       Name		      "Step"
-      SID		      "2"
-      Position		      [125, 160, 155, 190]
-      ZOrder		      2
-      SampleTime	      "0"
+      SID		      "4"
+      Position		      [40, 140, 70, 170]
+      ZOrder		      4
+      Time		      "Step_time"
+      Before		      "Initial_value"
+      After		      "Final_value"
+      SampleTime	      "Sample_time"
     }
     Block {
       BlockType		      ToWorkspace
       Name		      "To Workspace"
-      SID		      "3"
+      SID		      "1"
       Ports		      [1]
-      Position		      [210, 60, 270, 90]
-      ZOrder		      3
-      VariableName	      "esignal"
+      Position		      [420, 140, 480, 170]
+      ZOrder		      1
+      VariableName	      "y"
+      MaxDataPoints	      "inf"
+      SampleTime	      "-1"
+    }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "To Workspace1"
+      SID		      "2"
+      Ports		      [1]
+      Position		      [185, 25, 245, 55]
+      ZOrder		      2
+      VariableName	      "u"
       MaxDataPoints	      "inf"
       SampleTime	      "-1"
       SaveFormat	      "Timeseries"
     }
     Block {
-      BlockType		      ToWorkspace
-      Name		      "To Workspace1"
-      SID		      "4"
-      Ports		      [1]
-      Position		      [435, 160, 495, 190]
-      ZOrder		      4
-      VariableName	      "y1"
-      MaxDataPoints	      "inf"
-      SampleTime	      "-1"
-      SaveFormat	      "Timeseries"
-    }
-    Line {
-      SrcBlock		      "Level-2 MATLAB S-Function"
-      SrcPort		      1
-      DstBlock		      "To Workspace1"
-      DstPort		      1
+      BlockType		      M-S-Function
+      Name		      "sfcn2HangingPendulum"
+      SID		      "3"
+      Ports		      [1, 1]
+      Position		      [160, 139, 330, 191]
+      ZOrder		      3
+      FunctionName	      "sfcn2_HangingPendulum"
+      Parameters	      "m, lc, b, Jc, g"
     }
     Line {
       SrcBlock		      "Step"
       SrcPort		      1
       Points		      [27, 0]
       Branch {
-	Points			[0, -100]
-	DstBlock		"To Workspace"
+	Points			[0, -115]
+	DstBlock		"To Workspace1"
 	DstPort			1
       }
       Branch {
-	DstBlock		"Level-2 MATLAB S-Function"
+	Points			[0, 10]
+	DstBlock		"sfcn2HangingPendulum"
 	DstPort			1
       }
+    }
+    Line {
+      SrcBlock		      "sfcn2HangingPendulum"
+      SrcPort		      1
+      Points		      [40, 0; 0, -10]
+      DstBlock		      "To Workspace"
+      DstPort		      1
     }
   }
 }
