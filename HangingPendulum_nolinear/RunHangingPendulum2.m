@@ -101,8 +101,9 @@ plot(t,myx(:,1),'k',t,myx(:,2),'b');
 titlestr =strcat('Initial state x0=',x0String);
 title(strcat(titlestr,' x1 is black, x2 is blue'));
 figure(2)
-uloc=simout.get('u').signals.values;
-plot(t,uloc);
+%uloc=simout.get('u');%.signals.values;
+%plot(t,uloc);
+plot(t,simout.get('u'));
 title('Input signal u to the process');
 figure(3)
 yloc = simout.get('y');
