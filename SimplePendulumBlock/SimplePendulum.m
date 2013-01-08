@@ -1,6 +1,7 @@
 function SimplePendulum(block)
   setup(block);
 %endfunction
+%
 function setup(block)
   %% Register number of dialog parameters
   block.NumDialogPrms = 3;
